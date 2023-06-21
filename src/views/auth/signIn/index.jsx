@@ -1,5 +1,6 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { NavLink, useNavigate } from "react-router-dom";
 // Chakra imports
 import {
   Box,
@@ -24,8 +25,15 @@ import illustration from "assets/img/auth/Image.png";
 import { FcGoogle } from "react-icons/fc";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiEyeCloseLine } from "react-icons/ri";
+import { loginUser } from "redux/apiRequest";
 
 function SignIn() {
+  const [email, setEmail] = useState(""); // <-- Default values HERE
+  const [password, setPassword] = useState("");
+
+  const dispatch = useDispatch();
+  const history = useNavigate();
+
   // Chakra color mode
   const textColor = useColorModeValue("navy.700", "white");
   const textColorSecondary = "gray.400";
@@ -44,6 +52,20 @@ function SignIn() {
   );
   const [show, setShow] = React.useState(false);
   const handleClick = () => setShow(!show);
+
+  const handleSignIn = async (e) => {
+    e.preventDefault();
+    try {
+      const user = {
+        email,
+        password
+    };
+    loginUser(user, dispatch, history);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <DefaultAuth illustrationBackground={illustration} image={illustration}>
       <Flex
@@ -59,10 +81,10 @@ function SignIn() {
         mt={{ base: "40px", md: "14vh" }}
         flexDirection="column"
       >
-        <Box me='auto'>
-        <Heading color={textColor} fontSize="36px" mb="10px">
-          Đăng Nhập
-        </Heading>
+        <Box me="auto">
+          <Heading color={textColor} fontSize="36px" mb="10px">
+            Đăng Nhập
+          </Heading>
         </Box>
         <Flex
           zIndex="2"
@@ -119,7 +141,9 @@ function SignIn() {
               placeholder="mail@simmmple.com"
               mb="24px"
               fontWeight="500"
+              defaultValue={email}
               size="lg"
+              onChange={(event) => setEmail(event.target.value)}
             />
             <FormLabel
               ms="4px"
@@ -137,8 +161,10 @@ function SignIn() {
                 placeholder="Ít nhất 6 kí tự"
                 mb="24px"
                 size="lg"
+                defaultValue={password}
                 type={show ? "text" : "password"}
                 variant="auth"
+                onChange={(event) => setPassword(event.target.value)}
               />
               <InputRightElement display="flex" alignItems="center" mt="4px">
                 <Icon
@@ -184,6 +210,7 @@ function SignIn() {
               w="100%"
               h="50"
               mb="24px"
+              onClick={handleSignIn}
             >
               Đăng Nhập
             </Button>

@@ -1,6 +1,7 @@
 // Chakra Imports
 import {
   Avatar,
+  Button,
   Flex,
   Icon,
   Menu,
@@ -9,6 +10,7 @@ import {
   MenuList,
   Text,
   useColorModeValue,
+  useColorMode,
 } from "@chakra-ui/react";
 // Custom Components
 import { ItemContent } from "components/menu/ItemContent";
@@ -17,10 +19,12 @@ import { SidebarResponsive } from "components/sidebar/Sidebar";
 import PropTypes from "prop-types";
 import React from "react";
 // Assets
+import { IoMdMoon, IoMdSunny } from "react-icons/io";
 import { MdNotificationsNone,  } from "react-icons/md";
 import routes from "routes.js";
 export default function HeaderLinks(props) {
   const { secondary } = props;
+  const { colorMode, toggleColorMode } = useColorMode();
   // Chakra Color Mode
   const navbarIcon = useColorModeValue("gray.400", "white");
   let menuBg = useColorModeValue("white", "navy.800");
@@ -110,7 +114,23 @@ export default function HeaderLinks(props) {
           </Flex>
         </MenuList>
       </Menu>
-
+      <Button
+        variant='no-hover'
+        bg='transparent'
+        p='0px'
+        minW='unset'
+        minH='unset'
+        h='18px'
+        w='max-content'
+        onClick={toggleColorMode}>
+        <Icon
+          me='10px'
+          h='18px'
+          w='18px'
+          color={navbarIcon}
+          as={colorMode === "light" ? IoMdMoon : IoMdSunny}
+        />
+      </Button>
       <Menu>
         <MenuButton p="0px">
           <Avatar
@@ -175,8 +195,6 @@ export default function HeaderLinks(props) {
           </Flex>
         </MenuList>
       </Menu>
-
-
     </Flex>
   );
 }

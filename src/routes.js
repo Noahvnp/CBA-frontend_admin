@@ -17,8 +17,9 @@ import DataTables from "views/admin/dataTables";
 // Auth Imports
 import SignIn from "views/auth/signIn";
 import SignUp from "views/auth/signUp";
+import { createBrowserRouter } from "react-router-dom";
 
-const routes = [
+const routes = createBrowserRouter([
   {
     name: "Main Dashboard",
     layout: "/admin",
@@ -66,7 +67,8 @@ const routes = [
     layout: "/auth",
     path: "/sign-up",
     component: SignUp,
+    hide: true,
   },
-];
+]);
 
 export default routes;
