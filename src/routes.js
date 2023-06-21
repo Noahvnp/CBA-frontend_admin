@@ -63,9 +63,11 @@ const routes = [
     component: SignIn,
   },
   {
+    name: "Đăng kí",
     layout: "/auth",
     path: "/sign-up",
     component: SignUp,
+    hide: true,
   },
 ];
 
