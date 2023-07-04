@@ -79,7 +79,7 @@ export const logOut = async (dispatch, id, navigate, accessToken, axiosJWT) => {
       },
     });
     dispatch(logOutSuccess());
-    navigate("/");
+    navigate.push("/auth/sign-in");
   } catch (err) {
     dispatch(logOutFailure());
   }
@@ -88,7 +88,7 @@ export const logOut = async (dispatch, id, navigate, accessToken, axiosJWT) => {
 export const sendMail = async(user, navigate, axiosJWT) => {
   try {
     await axios.post("/sendmail", user);
-    navigate("/");
+    navigate.push("/");
   } catch (err) {
     console.log(err);
   }

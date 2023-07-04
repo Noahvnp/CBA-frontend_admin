@@ -1,22 +1,21 @@
 import React from "react";
 
 // Chakra imports
-import { Flex, useColorModeValue } from "@chakra-ui/react";
+import { Flex, Text, Image, useColorModeValue } from "@chakra-ui/react";
 
 // Custom components
-import Logo from "../../../assets/img/layout/logo.png";
+import Logo from "assets/img/layout/logo.png";
 import { HSeparator } from "components/separator/Separator";
 
 export function SidebarBrand() {
-  //   Chakra color mode
-  let logoColor = useColorModeValue("navy.700", "white");
-
+  const colorLogo = useColorModeValue("brand.300", "white");
   return (
-    <Flex align='center' direction='column'>
-      {/* <HorizonLogo h='26px' w='175px' my='32px' color={logoColor} /> */}
-      {/* <img src="../../../assets/img/layout/logo.png"  /> */}
-      <h1>Cantho Bussiness Association</h1>
-      <HSeparator mb='20px' />
+    <Flex align="center" direction="column">
+      <Image borderRadius="full" boxSize="150px" src={Logo} alt="Logo CBA" />
+      <Text fontSize="24px" fontWeight="800" color={colorLogo}>
+        CBA - Admin
+      </Text>
+      <HSeparator mb="20px" />
     </Flex>
   );
 }

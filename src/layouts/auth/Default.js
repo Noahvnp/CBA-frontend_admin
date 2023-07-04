@@ -51,7 +51,7 @@ function AuthIllustration(props) {
               color="secondaryGray.600"
             />
             <Text ms="0px" fontSize="sm" color="secondaryGray.600">
-              Quay lại trang Cantho Bussiness Association
+              Quay lại trang Cantho Business Association
             </Text>
           </Flex>
         </NavLink>

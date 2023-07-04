@@ -29,7 +29,7 @@ const routes = [
   {
     name: "Thông tin doanh nghiệp",
     layout: "/admin",
-    path: "/bussiness-info",
+    path: "/business-info",
     icon: (
       <Icon
         as={MdInfo}

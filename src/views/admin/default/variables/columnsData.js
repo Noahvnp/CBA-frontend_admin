@@ -1,19 +1,22 @@
-export const columnsDataCheck = [
+export const columnsDataEvents = [
   {
-    Header: "NAME",
-    accessor: "name",
+    Header: "Tên sự kiện",
+    accessor: "eventDescription",
   },
   {
-    Header: "PROGRESS",
-    accessor: "progress",
+    Header: "Địa chỉ",
+    accessor: "eventAddress",
   },
   {
-    Header: "QUANTITY",
-    accessor: "quantity",
+    Header: "Hình ảnh",
+    accessor: "eventPictureURL",
   },
   {
-    Header: "DATE",
-    accessor: "date",
+    Header: "Ngày bắt đầu",
+    accessor: "createdAt",
+  },
+  {
+    Header: "Hành động",
   },
 ];
 export const columnsDataComplex = [

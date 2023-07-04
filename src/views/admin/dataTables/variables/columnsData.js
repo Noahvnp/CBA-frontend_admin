@@ -1,19 +1,19 @@
-export const columnsDataDevelopment = [
+export const columnsDataBusiness = [
   {
     Header: "NAME",
-    accessor: "name",
+    accessor: "businessName",
   },
   {
     Header: "TECH",
-    accessor: "tech",
+    accessor: "businessAddress",
   },
   {
     Header: "DATE",
-    accessor: "date",
+    accessor: "businessRepresentative",
   },
   {
     Header: "PROGRESS",
-    accessor: "progress",
+    accessor: "businessCreateTime",
   },
 ];
 

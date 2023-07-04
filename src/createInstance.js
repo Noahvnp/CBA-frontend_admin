@@ -3,7 +3,7 @@ import jwt_decode from "jwt-decode";
 
 const refreshToken = async () => {
     try {
-      const res = await axios.post("/v1/auth/refresh", {
+      const res = await axios.post("/auth/refresh", {
         withCredentials: true,
       });
       return res.data;

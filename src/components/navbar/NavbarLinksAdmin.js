@@ -1,6 +1,9 @@
+import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 // Chakra Imports
 import {
   Avatar,
+  Button,
   Flex,
   Icon,
   Menu,
@@ -8,8 +11,12 @@ import {
   MenuItem,
   MenuList,
   Text,
+  useColorMode,
   useColorModeValue,
 } from "@chakra-ui/react";
+import {
+  MdLogout,
+} from "react-icons/md";
 // Custom Components
 import { ItemContent } from "components/menu/ItemContent";
 import { SearchBar } from "components/navbar/searchBar/SearchBar";
@@ -18,10 +25,15 @@ import PropTypes from "prop-types";
 import React from "react";
 // Assets
 import { MdNotificationsNone,  } from "react-icons/md";
+import { IoMdMoon, IoMdSunny } from "react-icons/io";
 import routes from "routes.js";
+import { createAxios } from "createInstance";
+import { logOutSuccess } from "redux/authSlice";
+import { logOut } from "redux/apiRequest";
 export default function HeaderLinks(props) {
   const { secondary } = props;
   // Chakra Color Mode
+  const { colorMode, toggleColorMode } = useColorMode();
   const navbarIcon = useColorModeValue("gray.400", "white");
   let menuBg = useColorModeValue("white", "navy.800");
   const textColor = useColorModeValue("secondaryGray.900", "white");
@@ -31,6 +43,18 @@ export default function HeaderLinks(props) {
     "14px 17px 40px 4px rgba(112, 144, 176, 0.18)",
     "14px 17px 40px 4px rgba(112, 144, 176, 0.06)"
   );
+
+  const user = useSelector((state) => state.auth.login.currentUser);
+  const accessToken = user?.accessToken;
+  const id = user?._id;
+  const dispatch = useDispatch();
+  const navigate = useHistory();
+  let axiosJWT = createAxios(user, dispatch, logOutSuccess);
+
+  const handleLogOut = () => {
+    logOut(dispatch, id, navigate, accessToken, axiosJWT);
+  };
+
   return (
     <Flex
       w={{ sm: "100%", md: "auto" }}
@@ -49,6 +73,7 @@ export default function HeaderLinks(props) {
       />
 
       <SidebarResponsive routes={routes} />
+      {/* Notifications */}
       <Menu>
         <MenuButton p="0px">
           <Icon
@@ -73,7 +98,7 @@ export default function HeaderLinks(props) {
         >
           <Flex jusitfy="space-between" w="100%" mb="20px">
             <Text fontSize="md" fontWeight="600" color={textColor}>
-              Notifications
+              Thông báo
             </Text>
             <Text
               fontSize="sm"
@@ -82,7 +107,7 @@ export default function HeaderLinks(props) {
               ms="auto"
               cursor="pointer"
             >
-              Mark all read
+              Đọc tất cả
             </Text>
           </Flex>
           <Flex flexDirection="column">
@@ -111,12 +136,31 @@ export default function HeaderLinks(props) {
         </MenuList>
       </Menu>
 
+      <Button
+        variant='no-hover'
+        bg='transparent'
+        p='0px'
+        minW='unset'
+        minH='unset'
+        h='18px'
+        w='max-content'
+        onClick={toggleColorMode}>
+        <Icon
+          me='10px'
+          h='18px'
+          w='18px'
+          color={navbarIcon}
+          as={colorMode === "light" ? IoMdMoon : IoMdSunny}
+        />
+      </Button>
+
+      {/* Profile */}
       <Menu>
         <MenuButton p="0px">
           <Avatar
             _hover={{ cursor: "pointer" }}
             color="white"
-            name="Adela Parkson"
+            name={user?.username || "Thành viên ban chấp hành"}
             bg="#11047A"
             size="sm"
             w="40px"
@@ -143,7 +187,7 @@ export default function HeaderLinks(props) {
               fontWeight="700"
               color={textColor}
             >
-              👋&nbsp; Hey, Adela
+              Chào, {user?.username || "Thành viên ban chấp hành"}
             </Text>
           </Flex>
           <Flex flexDirection="column" p="10px">
@@ -153,15 +197,7 @@ export default function HeaderLinks(props) {
               borderRadius="8px"
               px="14px"
             >
-              <Text fontSize="sm">Profile Settings</Text>
-            </MenuItem>
-            <MenuItem
-              _hover={{ bg: "none" }}
-              _focus={{ bg: "none" }}
-              borderRadius="8px"
-              px="14px"
-            >
-              <Text fontSize="sm">Newsletter Settings</Text>
+              <Text fontSize="sm">Cài đặt cá nhân</Text>
             </MenuItem>
             <MenuItem
               _hover={{ bg: "none" }}
@@ -169,13 +205,14 @@ export default function HeaderLinks(props) {
               color="red.400"
               borderRadius="8px"
               px="14px"
+              onClick={handleLogOut}
             >
-              <Text fontSize="sm">Log out</Text>
+              <Text fontSize="sm">Log out &nbsp;</Text>
+              <Icon as={MdLogout} width="20px" height="20px" color="inherit" />
             </MenuItem>
           </Flex>
         </MenuList>
       </Menu>
-
 
     </Flex>
   );
